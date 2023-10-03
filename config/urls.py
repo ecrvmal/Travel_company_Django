@@ -26,6 +26,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mainapp.main, name='main'),  # name - название привязки для ссылок из др html страниц
+    path('auth/', include('authapp.urls', namespace='auth')),
     path('list_of_accommodations', include('mainapp.urls', namespace='acc')),
     # path('auth/', include('authapp.urls', namespace='auth')),  # переход в маршруты приложения
 ]
