@@ -1,11 +1,11 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from authapp.models import TravelUser, TravelUserProfile
 from django.contrib.auth.forms import UserChangeForm
 
 
-class TravelUserRegisterForm(UserCreationForm):
+class TravelUserRegisterForm(UserCreationForm):     # create user profile
     class Meta:
         model = TravelUser
         fields = (
@@ -28,7 +28,7 @@ class TravelUserRegisterForm(UserCreationForm):
 
 
 
-class TravelUserEditForm(UserChangeForm):
+class TravelUserEditForm(UserChangeForm):         # Edit user profile
     class Meta:
         model = TravelUser
         fields = ('username', 'first_name', 'email', 'age', 'avatar',
@@ -48,3 +48,26 @@ class TravelUserEditForm(UserChangeForm):
             raise forms.ValidationError("ВЫ слишком молоды!")
 
         return data
+
+
+class TravelUserLoginForm(AuthenticationForm):       # Authentication
+    class Meta:
+        model = TravelUser
+        fields = ('username', 'password')
+
+    def __init__(self, *args, **kwargs):
+        super(TravelUserLoginForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+
+
+class TravelUserProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = TravelUserProfile
+        fields = ('tagline', 'aboutMe', 'gender')
+
+    def __init__(self, *args, **kwargs):
+        super(TravelUserProfileEditForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
