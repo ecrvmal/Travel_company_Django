@@ -5,7 +5,10 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import auth
-from authapp.forms import TravelUserRegisterForm, TravelUserLoginForm
+from django.db import transaction
+from authapp.forms import TravelUserRegisterForm, TravelUserLoginForm, \
+    TravelUserEditForm, TravelUserProfileEditForm
+
 
 
 # Регистрация пользователя
@@ -64,6 +67,35 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('main'))
+
+
+@transaction.atomic()    # работа функции неделима
+def edit(request):
+
+    title = 'редактирование'
+
+    if request.method == 'POST':
+        edit_form = TravelUserEditForm(request.POST,   # стандартный профиль user-a
+                                       request.FILES,
+                                       instance=request.user)
+        profile_form = TravelUserProfileEditForm(      # расширеный профиль user-a
+            request.POST, instance=request.user.traveluserprofile)
+                # работаем с активным user, в привязке к его профилю
+
+        if edit_form.is_valid() and profile_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(reverse('auth:edit'))
+    else:
+        edit_form = TravelUserEditForm(instance=request.user)
+        profile_form = TravelUserProfileEditForm(
+            instance=request.user.traveluserprofile)
+
+    content = {'title': title,
+               'edit_form': edit_form,
+               'profile_form': profile_form}
+
+    return render(request, 'authapp/edit.html', content)
+
 
 
 
