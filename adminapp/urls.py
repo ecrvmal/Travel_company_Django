@@ -12,7 +12,7 @@ urlpatterns = [
     path('countries/read/', adminapp.countries, name='countries'),
     path('countries/create/', adminapp.CountryCreateView.as_view(),
          name='country_create'),
-    path('countries/update/<int:pk>/', adminapp.CountryUpdateView,
+    path('countries/update/<int:pk>/', adminapp.CountryUpdateView.as_view(),
          name='country_update'),
     path('countries/delete/<int:pk>/', adminapp.CountryDeleteView.as_view(),
          name='country_delete'),
