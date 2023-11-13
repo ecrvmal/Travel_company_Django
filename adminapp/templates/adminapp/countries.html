@@ -8,10 +8,9 @@
         новая страна
       </a>
     </button>
-
+		
     {% for object in objects %}
-      <div class="category_record
- {% if not object.is_active %}not_active{% endif %}"
+      <div class="country_record {% if not object.is_active %}not_active{% endif %}"
       {% if not object.is_active %}
           not_active
       {% endif %}>
@@ -19,6 +18,11 @@
           {{ object.name|title }}
         </div>
         <div class="category_actions">
+          <button>
+            <a href="{% url 'admin:accommodations' object.pk %}">
+              размещения
+            </a>
+          </button>
           <button>
             <a href="{% url 'admin:country_update' object.pk %}">
               редактировать
