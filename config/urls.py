@@ -31,6 +31,7 @@ urlpatterns = [
     path('list_of_accommodations', include('mainapp.urls', namespace='acc')),
     # path('auth/', include('authapp.urls', namespace='auth')),  # переход в маршруты приложения
     path('', include('social_django.urls', namespace='social')),
+    path('basket/', include('basketapp.urls', namespace='basket')),
 ]
 
 if settings.DEBUG:
