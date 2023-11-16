@@ -8,6 +8,11 @@ from django.http import JsonResponse
 from basketapp.models import Basket
 from mainapp.models import Accommodation
 
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+
 @login_required
 def basket(request):
     title = 'корзина'
@@ -50,9 +55,13 @@ def basket_remove(request, pk):
 
 @login_required
 def basket_edit(request, pk, nights):
-    if request.is_ajax():
+    # print(request.__dir__())
+    # if request.is_ajax():
+    if is_ajax(request):
         nights = int(nights)
         new_basket_item = Basket.objects.get(pk=int(pk))
+        # print(f'nights: {nights}')
+        # print(f'busket_item: {new_basket_item}')
 
         if nights > 0:
             new_basket_item.nights = nights
@@ -63,8 +72,9 @@ def basket_edit(request, pk, nights):
         basket = Basket.get_items(request.user)
 
         content = {
-            'basket': basket,
+            'basket_items': basket,
         }
+        # print(f'content: {content}')
 
         result = render_to_string('basketapp/includes/inc_basket_list.html', content)
 

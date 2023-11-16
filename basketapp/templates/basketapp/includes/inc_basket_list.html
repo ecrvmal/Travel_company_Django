@@ -4,14 +4,14 @@
     <div class="container">
         {#        <img src="/media/{{ reservation.accommodation.image }}" #}
         {#             alt="{{ reservation.accommodation.short_desc }}"> #}
-        <div class="row flex-wrap form-group col-lg-sm text">
-            <div>
+        <div class="d-flex justify-content-between" style="max-width:900px; ">
+            <div  >
                 <span class="col-form-label"><b>Страна: </b>{{ reservation.accommodation.country.name|title }}</span>
                 <span class=""><b>Размещение: </b>{{ reservation.accommodation.name|title }}</span>
                 <span class=""><b>Стоимость суток: </b>{{ reservation.accommodation.price }}&nbspруб</span>
                 <span class=""><b>Количество ночей: </b>{{ reservation.nights }}</span>
-                <input type="number" name="{{ reservation.pk }}" min="0" value="{{ reservation.nights }}">
-
+            </div>
+            <div><input type="number" name="{{ reservation.pk }}" min="0" value="{{ reservation.nights }}">
             </div>
             <div>
                 <button class="btn btn-danger btn-sm">
