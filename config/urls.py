@@ -33,6 +33,7 @@ urlpatterns = [
     path('', include('social_django.urls', namespace='social')),
     path('basket/', include('basketapp.urls', namespace='basket')),
     path('order/', include('ordersapp.urls', namespace='order')),
+
 ]
 
 if settings.DEBUG:
