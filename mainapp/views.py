@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 # from .models import ListOfCountries
 from mainapp.models import Accommodation
 
+
 def main(request):
     return render(request, 'mainapp/index.html')
 
